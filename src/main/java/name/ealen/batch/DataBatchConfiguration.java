@@ -106,11 +106,6 @@ public class DataBatchConfiguration {
                 return access;
             }
         };
-//        lambda也可以写为:
-//        return access -> {
-//            log.info("processor data : " + access.toString());
-//            return access;
-//        };
     }
 
     @Bean

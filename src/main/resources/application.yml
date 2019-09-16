@@ -2,6 +2,28 @@ spring:
   application:
     name: springboot-batch
   datasource:
-    url: jdbc:mysql://localhost:3306/yourdatabase
-    username: yourname
-    password: yourpass
+    url: jdbc:mysql://36.155.115.153:3306/batch?useUnicode=true&useSSL=false&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: ysten123
+  jpa:
+    database: MySQL
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    #配置jpa显示SQL语句
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+  #线程池配置
+  task:
+    pool:
+      corePoolSize: 20
+      maxPoolSize: 400
+      keepAliveSeconds: 30000
+      queueCapacity: 200
+  batch:
+    job:
+      enabled: true   #是否开启自动执行-启时执行
+server:
+  servlet:
+    context-path: /batch
+  port: 8080
