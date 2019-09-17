@@ -42,6 +42,8 @@ public class BatchConfig {
 
     @Resource
     private EntityManagerFactory emf;
+//    @Resource
+//    MyReader myReader;
 
     @Bean
     public Job testJob() {
@@ -78,11 +80,12 @@ public class BatchConfig {
      */
     @Bean(destroyMethod = "")
     @StepScope
-    public ItemReader<? extends FromBean> getDataReader(@Value("#{jobParameters[testType]}") String testType) {
+    public ItemReader<FromBean> getDataReader(@Value("#{jobParameters[testType]}") String testType) {
         //读取数据,这里可以用JPA,JDBC,JMS 等方式 读入数据
         JpaPagingItemReader<FromBean> reader = new JpaPagingItemReader<>();
         //这里选择JPA方式读数据 一个简单的 native SQL
         String sqlQuery = "SELECT * FROM from_tab where type = '"+ testType + "'";
+        log.info("job query sql : " + sqlQuery);
         try {
             JpaNativeQueryProvider<FromBean> queryProvider = new JpaNativeQueryProvider<>();
             queryProvider.setSqlQuery(sqlQuery);
@@ -104,6 +107,7 @@ public class BatchConfig {
     @Bean
     public ItemProcessor<FromBean, ToBean> getDataProcessor() {
         return fromBean -> {
+            log.info("============================= processor data : 开始");
             ToBean toBean = new ToBean();
             OrikaMapper.map(fromBean, toBean);
             //模拟  假装处理数据,这里处理就是打印一下
@@ -119,8 +123,12 @@ public class BatchConfig {
     @Bean
     public ItemWriter<ToBean> getDataWriter() {
         return list -> {
-            for (ToBean toBean : list) {
-                log.info("write data : " + toBean); //模拟 假装写数据 ,这里写真正写入数据的逻辑
+            if(null != list){
+                for (ToBean toBean : list) {
+                    log.info("write data : " + toBean); //模拟 假装写数据 ,这里写真正写入数据的逻辑
+                }
+            } else {
+                log.error("================================数据时空getDataWriter");
             }
         };
     }
