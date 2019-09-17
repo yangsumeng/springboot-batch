@@ -1,6 +1,8 @@
-package name.ealen.task;
+package name.yangsm.task;
 
 import lombok.extern.slf4j.Slf4j;
+import name.yangsm.bean.FromBean;
+import name.yangsm.service.MyService;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -12,8 +14,6 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * @author YSTen_NC0705
@@ -27,18 +27,27 @@ public class SyncTask {
     private JobLauncher jobLauncher;
     //  DataBatchConfiguration 中注入的Job Bean
     @Autowired
-    private Job dataHandleJob;
+    private Job testJob;
 
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public synchronized void onSchedule() {
         log.info("============================开始====================");
         //可以色值参数
-        JobParameters jobParameters = new JobParametersBuilder()
-//                .addString(Constants.PARAM_CHANNELCODE, channelCode)
-//                .addString(Constants.PARAM_JOBTIME, jobTime)
-                .toJobParameters();
+//        new MyService<FromBean>().doAdd(new FromBean("1","name1","1","false"));
+//        new MyService<FromBean>().doAdd(new FromBean("2","name1","1","false"));
+//        new MyService<FromBean>().doAdd(new FromBean("3","name1","1","false"));
+//        new MyService<FromBean>().doAdd(new FromBean("4","name1","1","false"));
+//        new MyService<FromBean>().doAdd(new FromBean("5","name1","1","false"));
+//        new MyService<FromBean>().doAdd(new FromBean("6","name1","1","false"));
+
         try {
-            jobLauncher.run(dataHandleJob, jobParameters);
+            JobParameters jobParameters = new JobParametersBuilder().addString("testType", "1").toJobParameters();
+            jobLauncher.run(testJob, jobParameters);
+
+            log.info("============================上下两个任务分割====================");
+
+            jobParameters = new JobParametersBuilder().addString("testType", "2").toJobParameters();
+            jobLauncher.run(testJob, jobParameters);
         } catch (JobExecutionAlreadyRunningException e) {
             e.printStackTrace();
         } catch (JobRestartException e) {

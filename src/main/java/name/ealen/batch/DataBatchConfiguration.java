@@ -29,18 +29,21 @@ import javax.persistence.EntityManagerFactory;
 @EnableBatchProcessing
 public class DataBatchConfiguration {
     private static final Logger log = LoggerFactory.getLogger(DataBatchConfiguration.class);
-
+    //用于构建JOB
     @Resource
-    private JobBuilderFactory jobBuilderFactory;    //用于构建JOB
+    private JobBuilderFactory jobBuilderFactory;
 
+    //用于构建Step
     @Resource
-    private StepBuilderFactory stepBuilderFactory;  //用于构建Step
+    private StepBuilderFactory stepBuilderFactory;
 
+    //注入实例化Factory 访问数据
     @Resource
-    private EntityManagerFactory emf;           //注入实例化Factory 访问数据
+    private EntityManagerFactory emf;
 
+    //简单的JOB listener
     @Resource
-    private JobListener jobListener;            //简单的JOB listener
+    private JobListener jobListener;
 
     /**
      * 一个简单基础的Job通常由一个或者多个Step组成

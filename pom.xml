@@ -39,5 +39,11 @@
             <artifactId>lombok</artifactId>
             <version>1.16.8</version>
         </dependency>
+<!--        javaBean拷贝-->
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>1.5.0</version>
+        </dependency>
     </dependencies>
 </project>

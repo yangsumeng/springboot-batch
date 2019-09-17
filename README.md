@@ -11,7 +11,8 @@
     初始化测试数据:    metadata/access.sql
    ~~~
 3. 知识点
-- spring batch 规范
+- spring batch 定时任务执行
+   - SyncTask 测试每5分钟执行一次
 - spring batch 线程池
 - spring batch 执行原理
     ~~~
