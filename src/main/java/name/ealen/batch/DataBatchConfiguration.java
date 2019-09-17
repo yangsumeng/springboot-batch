@@ -70,7 +70,7 @@ public class DataBatchConfiguration {
                 faultTolerant().retryLimit(3).retry(Exception.class).skipLimit(100).skip(Exception.class). //捕捉到异常就重试,重试100次还是异常,JOB就停止并标志失败
                 reader(getDataReader()).         //指定ItemReader
                 processor(getDataProcessor()).   //指定ItemProcessor
-                writer(getDataWriter()).         //指定ItemWriter
+                writer(getDataWriter()).        //指定ItemWriter
                 build();
     }
 

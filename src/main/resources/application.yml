@@ -22,7 +22,7 @@ spring:
       queueCapacity: 200
   batch:
     job:
-      enabled: true   #是否开启自动执行-启时执行
+      enabled: false   #是否开启自动执行-启时执行
 server:
   servlet:
     context-path: /batch
